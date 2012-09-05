@@ -2,11 +2,12 @@ using System;
 using System.Web.Mvc;
 using System.Web.Routing;
 using NUnit.Framework;
-using NUnit.Framework.SyntaxHelpers;
 using RestMvc.Attributes;
 
 namespace RestMvc.UnitTests
 {
+    using System.Web.SessionState;
+
     [TestFixture]
     public class RestfulControllerTest
     {
@@ -51,6 +52,11 @@ namespace RestMvc.UnitTests
             public IController CreateController(RequestContext requestContext, string controllerName)
             {
                 return new DifferentSubclassController();
+            }
+
+            public SessionStateBehavior GetControllerSessionBehavior(RequestContext requestContext, string controllerName)
+            {
+                throw new NotImplementedException();
             }
 
             public void ReleaseController(IController controller) { }

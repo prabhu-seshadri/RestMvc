@@ -31,7 +31,7 @@ namespace RestMvc.FunctionalTests.Assertions
                 if (header == "Date")
                     result &= actualHeaders["Date"] != null;
                 else
-                    result &= actualHeaders[header] == expectedHeaders[header];
+                    result &= actualHeaders[header].IgnoreCharacterSet() == expectedHeaders[header].IgnoreCharacterSet();
             }
             return result;
         }
@@ -47,6 +47,14 @@ namespace RestMvc.FunctionalTests.Assertions
         {
             var lines = (from string header in headers.Keys select string.Format("{0}: {1}", header, headers[header])).ToArray();
             return string.Join(Environment.NewLine, lines);
+        }
+    }
+
+    public static class StringExtensions
+    {
+        public static string IgnoreCharacterSet(this string header)
+        {
+            return header.Replace(@"; charset=utf-8", string.Empty);
         }
     }
 }
